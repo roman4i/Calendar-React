@@ -1,17 +1,45 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { createPage as createEventPage } from './eventCreate';
+import { createPage as createCalendarPage } from './calendar';
+import goToPage, { basePathname } from './navigation';
+import authShow from './calendar/auth/authScript';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import './calendar/head/calendarHead.scss';
+import './calendar/table/tableStyle.scss';
+import './eventCreate/eventPage.scss';
+import config from './config';
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+localStorage.setItem('currentUser', 'none');
+
+window.onpopstate = () => {
+  const routeToGo = Object.values(config.routes)
+    .find((routeConfig) => window.location.pathname.includes(routeConfig.path));
+
+  if (routeToGo) {
+    goToPage(routeToGo.name);
+  }
+
+  if (window.location.pathname === `${basePathname}${config.routes[config.routeNames.createEvent].path}`) {
+    document.getElementById('calendarDivCont').remove();
+  }
+  if (window.location.pathname === `${basePathname}${config.routes[config.routeNames.calendar].path}`) {
+    document.getElementById('createEventDiv').remove();
+  }
+};
+
+document.addEventListener('pushStateChanged', (event) => {
+  const { route } = event.detail;
+
+  switch (route.name) {
+    case config.routeNames.calendar:
+      createCalendarPage();
+      break;
+    case config.routeNames.createEvent:
+      createEventPage();
+      break;
+    default:
+      break;
+  }
+});
+
+authShow();
+goToPage(config.routeNames.calendar);
