@@ -8,12 +8,12 @@ export default class StaticStorage {
   }
 
   getNames() {
-    this._names = ['Igor', 'Oleg', 'Olga', 'Yaroslav', 'Anna'];
-    return this._names;
+    this.names = ['Igor', 'Oleg', 'Olga', 'Yaroslav', 'Anna'];
+    return this.names;
   }
 
   getAdmins() {
-    this._admins = ['Oleg', 'Olga'];
-    return this._admins;
+    this.admins = ['Oleg', 'Olga'];
+    return this.admins;
   }
 }
