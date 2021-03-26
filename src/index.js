@@ -1,7 +1,6 @@
 import React from 'react';
 import reactDom from 'react-dom';
-import MakeCalendar from './components/calendar/makeCalendar';
+import App from './App';
 
 // eslint-disable-next-line react/jsx-filename-extension
-const result = <MakeCalendar />;
-reactDom.render(result, document.getElementById('root'));
+reactDom.render(<App />, document.getElementById('root'));
